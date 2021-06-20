@@ -32,7 +32,7 @@ public class JwtAuthenticationController {
     public ResponseEntity createAuthenticationToken(@RequestBody SignupRequest request){
         Authentication authentication = authenticationManager.authenticate
                 (new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        SecurityContextHolder.(getContext).setAuthentication(authentication);
         final UserDetails userDetails = customUserDetailsService.loadUserByUsername(request.getUsername());
         final String token = jwtTokenUtil.generateToken(userDetails);
         return ResponseEntity.ok(new SignupResponse(token));
