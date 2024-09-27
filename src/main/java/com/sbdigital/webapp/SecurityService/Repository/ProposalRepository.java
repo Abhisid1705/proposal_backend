@@ -8,4 +8,7 @@ import java.util.List;
 public interface ProposalRepository extends JpaRepository<Proposal, Long> {
     List<Proposal> findByAssigneeContains(Long userId);
     Proposal findByIdAndAssigneeContains(Long taskId, Long userId);
+
+    List<Proposal> findByCreatedBy(Integer createdBy);
+
 }

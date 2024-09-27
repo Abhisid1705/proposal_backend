@@ -19,6 +19,8 @@ public class Notification {
     @Column(name = "task_id")
     private int taskId;
 
+    @Column(name ="message")
+    private String message;
     public Long getNotification_id() {
         return notification_id;
     }
@@ -52,6 +54,24 @@ public class Notification {
 
     public Notification setTaskId(int taskId) {
         this.taskId = taskId;
+        return this;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public Notification setUserId(Long userId) {
+        this.userId = userId;
+        return this;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public Notification setMessage(String message) {
+        this.message = message;
         return this;
     }
 }

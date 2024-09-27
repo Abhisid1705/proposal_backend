@@ -30,11 +30,16 @@ public class Proposal {
     @Column(name = "priority")
     private int priority;
 
+    @Column(name = "createdBy")
+    private int createdBy;
+
     @ElementCollection
     @Column(name = "assignee")
     private List<Long> assignee;
 
-    // Getters and Setters
+    @ElementCollection
+    @Column(name = "contributors")
+    private List<Long> contributors;    // Getters and Setters
     // ...
 
     public Long getId() {
@@ -106,6 +111,24 @@ public class Proposal {
 
     public Proposal setAssignee(List<Long> assignee) {
         this.assignee = assignee;
+        return this;
+    }
+
+    public int getCreatedBy() {
+        return createdBy;
+    }
+
+    public Proposal setCreatedBy(int createdBy) {
+        this.createdBy = createdBy;
+        return this;
+    }
+
+    public List<Long> getContributors() {
+        return contributors;
+    }
+
+    public Proposal setContributors(List<Long> contributors) {
+        this.contributors = contributors;
         return this;
     }
 }

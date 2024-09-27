@@ -23,4 +23,8 @@ public class NotificationController {
     public List<Notification> getNotificationsByUserIdAndRead(@PathVariable Long userId, @PathVariable int read) {
         return notificationService.getNotificationsByUserIdAndRead(userId, read);
     }
+    @GetMapping("/{id}/user/{userid}/read/{read}")
+    public Notification getNotificationsByUserIdAndRead(@PathVariable Long id, @PathVariable Long userid,@PathVariable int read) {
+        return notificationService.updateNotificationReadStatus(id,userid, read);
+    }
 }

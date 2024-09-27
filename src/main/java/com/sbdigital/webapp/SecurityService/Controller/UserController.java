@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")  // Replace with your frontend URL
@@ -45,5 +46,16 @@ public class UserController {
                 .fromCurrentContextPath().path("/users/sign-up")
                 .buildAndExpand(result.getUsername()).toUri();
         return ResponseEntity.created(location).body(result);
+    }
+    @GetMapping("/{username}")
+    public ResponseEntity<User> getUserByUsername(@PathVariable String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found with username: " + username));
+        return ResponseEntity.ok(user);
+    }
+    @GetMapping("/all")
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        return ResponseEntity.ok(users);
     }
 }
