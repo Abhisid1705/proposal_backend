@@ -4,7 +4,10 @@ import com.sbdigital.webapp.SecurityService.Domain.Proposal;
 import com.sbdigital.webapp.SecurityService.Service.ProposalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -28,5 +31,23 @@ public class ProposalController {
     @GetMapping("/task/{taskId}/user/{userId}")
     public Proposal getProposalByTaskIdAndUserId(@PathVariable Long taskId, @PathVariable Long userId) {
         return proposalService.getProposalByTaskIdAndUserId(taskId, userId);
+    }
+    @PostMapping("/task/{taskId}/user/{userId}/submitProposal")
+    public Proposal submitProposal(@PathVariable Long taskId, @PathVariable Long userId,
+                                   @RequestParam("file") MultipartFile file,
+                                   @RequestBody Proposal proposal) throws IOException {
+        // Save the file to a directory
+        String uploadDir = "uploads/";
+        File uploadFile = new File(uploadDir + file.getOriginalFilename());
+        file.transferTo(uploadFile);
+
+        // Process the proposal
+        Proposal existingProposal = proposalService.getProposalByTaskIdAndUserId(taskId, userId);
+        if (existingProposal != null) {
+
+            return proposalService.saveProposal(existingProposal);
+        } else {
+            return proposalService.saveProposal(proposal);
+        }
     }
 }
