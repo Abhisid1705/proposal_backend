@@ -10,8 +10,8 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long notification_id;
 
-    @Column(name = "user_id")
-    private Long user_id;
+    @Column(name = "userId")
+    private Long userId;
 
     @Column(name = "read")
     private int read;
@@ -29,11 +29,11 @@ public class Notification {
     }
 
     public Long getUser_id() {
-        return user_id;
+        return userId;
     }
 
     public Notification setUser_id(Long user_id) {
-        this.user_id = user_id;
+        this.userId = user_id;
         return this;
     }
 

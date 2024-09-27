@@ -14,7 +14,7 @@ public class ProposalController {
     @Autowired
     private ProposalService proposalService;
 
-    @PostMapping
+    @PostMapping("/create")
     public Proposal createProposal(@RequestBody Proposal proposal) {
 
         return proposalService.saveProposal(proposal);
