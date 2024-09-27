@@ -35,10 +35,11 @@ public class ProposalController {
     @PostMapping("/task/{taskId}/user/{userId}/submitProposal")
     public Proposal submitProposal(@PathVariable Long taskId, @PathVariable Long userId,
                                    @RequestParam("file") MultipartFile file,
-                                   @RequestBody Proposal proposal) throws IOException {
+                                   @ModelAttribute Proposal proposal) throws IOException {
         // Save the file to a directory
-        String uploadDir = "uploads/";
-        File uploadFile = new File(uploadDir + file.getOriginalFilename());
+        String uploadDir = System.getProperty("user.dir") + "/uploads/";
+      //  System.out.println("hi"+System.getProperty("user.dir"));
+        File uploadFile = new File(uploadDir + +userId+"_"+taskId+"_"+file.getOriginalFilename());
         file.transferTo(uploadFile);
 
         // Process the proposal
