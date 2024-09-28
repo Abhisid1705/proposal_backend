@@ -41,6 +41,8 @@ public class Proposal {
     @Column(name = "contributors")
     private List<Long> contributors;    // Getters and Setters
     // ...
+    @Column(name = "status")
+    private int status;
 
     public Long getId() {
         return id;
@@ -129,6 +131,15 @@ public class Proposal {
 
     public Proposal setContributors(List<Long> contributors) {
         this.contributors = contributors;
+        return this;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public Proposal setStatus(int status) {
+        this.status = status;
         return this;
     }
 }

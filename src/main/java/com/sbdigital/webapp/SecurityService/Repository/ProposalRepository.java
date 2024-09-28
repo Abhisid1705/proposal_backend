@@ -11,4 +11,7 @@ public interface ProposalRepository extends JpaRepository<Proposal, Long> {
 
     List<Proposal> findByCreatedBy(Integer createdBy);
 
+    List<Proposal> findByAssigneeContainsAndStatus(Long userId, int status);
+
+
 }

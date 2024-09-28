@@ -34,4 +34,7 @@ public class ProposalService {
         return proposalOptional.orElseGet(Proposal::new);
 
     }
+    public List<Proposal> getProposalsByUserIdAndStatus(Long userId, int status) {
+        return proposalRepository.findByAssigneeContainsAndStatus(userId, status);
+    }
 }

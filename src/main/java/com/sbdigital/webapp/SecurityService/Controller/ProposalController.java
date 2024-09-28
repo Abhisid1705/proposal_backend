@@ -5,11 +5,11 @@ import com.sbdigital.webapp.SecurityService.Domain.Proposal;
 import com.sbdigital.webapp.SecurityService.Service.NotificationService;
 import com.sbdigital.webapp.SecurityService.Service.ProposalService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*")  // Replace with your frontend URL
@@ -23,6 +23,8 @@ public class ProposalController {
     @PostMapping("/create")
     public Proposal createProposal(@RequestBody Proposal proposal) {
         proposal.setContributors(new ArrayList<Long>());
+        proposal.setStatus(0);
+        Proposal savedProposal =proposalService.saveProposal(proposal);
         List<Notification> notifications = new ArrayList<>();
         for (Long userId : proposal.getAssignee()) {
             Notification notification = new Notification();
@@ -35,12 +37,12 @@ public class ProposalController {
         // Save all notifications to the database
         notificationService.saveAllNotifications(notifications);
 
-        return proposalService.saveProposal(proposal);
+        return savedProposal;
     }
 
     @GetMapping("/user/{userId}")
     public List<Proposal> getProposalsByUserId(@PathVariable Long userId) {
-        return proposalService.getProposalsByUserId(userId);
+        return proposalService.getProposalsByUserIdAndStatus(userId,0);
     }
 
     @GetMapping("/task/{taskId}/user/{userId}")
@@ -55,6 +57,16 @@ public class ProposalController {
     @GetMapping("/{taskid}")
     public Proposal getProposalById(@PathVariable Long taskid) {
         return proposalService.getProposalById(taskid);
+    }
+    @GetMapping("task/{taskid}/finalise")
+    public Proposal finalizeTask(@PathVariable Long taskid) {
+        Proposal proposal= proposalService.getProposalById(taskid);
+        if(proposal!=null){
+            proposal.setStatus(1);
+            return proposalService.saveProposal(proposal);
+        }
+        return new Proposal();
+
     }
 
 }
