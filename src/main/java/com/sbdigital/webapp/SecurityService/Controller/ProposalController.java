@@ -58,11 +58,11 @@ public class ProposalController {
     public Proposal getProposalById(@PathVariable Long taskid) {
         return proposalService.getProposalById(taskid);
     }
-    @GetMapping("task/{taskid}/finalise")
-    public Proposal finalizeTask(@PathVariable Long taskid) {
+    @GetMapping("task/{taskid}/finalise/{userid}")
+    public Proposal finalizeTask(@PathVariable Long taskid,@PathVariable Integer userid) {
         Proposal proposal= proposalService.getProposalById(taskid);
         if(proposal!=null){
-            proposal.setStatus(1);
+            proposal.setStatus(userid);
             return proposalService.saveProposal(proposal);
         }
         return new Proposal();
